@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Amadon - Cart</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+        integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" 
+        crossorigin="anonymous">
+    <style>
+        img {
+            width: 100px;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
+        .table > tbody > tr > th {
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-dark fixedt-top bg-dark">
+            <div class="col">
+                <a href="/" class="navbar-brand"><h3 class="text-light">The Amadon Store</h3></a>
+            </div>
+            <div class="col-md-1">
+                <a href="/amadon/cart/" class="navbar-brand"><h4 class="text-light">Cart</h4></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container text-center pt-4">
+            <h4 class="text-info mb-5">Your Cart</h4>
+
+            {% if cart %}
+                <table class="table table-dark table-striped text-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>
+                                    <img src="{{ item.itemLink }}" 
+                                        alt="{{ item.itemName }} Img">
+                                </td>
+                                <td>{{ item.itemName }}</td>
+                                <td>
+                                    <select name="quantity" class="form-control" 
+                                        form="form-{{ item.itemID }}">
+                                        <option selected>{{ item.quantity }}</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                    </select>
+                                </td>
+                                <td><b>${{ item.sum }}</b></td>
+                                <td>
+                                    <form action="update/{{ item.itemID }}" method="POST" 
+                                        id="form-{{ item.itemID }}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success">Update</button>
+                                        <a href="remove/{{ item.itemID }}" class="btn btn-danger">Remove</a>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="thead-light">
+                            <th></th>
+                            <th></th>
+                            <th><b>Total Sum</b></th>
+                            <th><b>{{ count }}</b></th>
+                            <th><b>${{ total }}</b></th>
+                            <th></th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row d-flex justify-content-center">
+                    <a href="purchase/" class="btn btn-lg btn-outline-primary">Purchase</a>
+                </div>
+            {% else %}
+                <h5 class="text-danger"><em>Your cart is empty</em></h5>
+            {% endif %}
+
+        </div>
+    </main>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" 
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" 
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
